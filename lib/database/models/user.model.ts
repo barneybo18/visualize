@@ -2,14 +2,14 @@ import { Schema, model, models } from "mongoose";
 
 const UserSchema = new Schema({
   clerkId: {
-    type: String, 
-    required: true, 
-    unique: true
+    type: String,
+    required: true,
+    unique: true,
   },
   email: {
-    type: String, 
-    required: true, 
-    unique: true
+    type: String,
+    required: true,
+    unique: true,
   },
   username: {
     type: String,
@@ -18,7 +18,7 @@ const UserSchema = new Schema({
   },
   photo: {
     type: String,
-    required: true
+    required: true,
   },
   firstName: {
     type: String,
@@ -32,10 +32,10 @@ const UserSchema = new Schema({
   },
   creditBalance: {
     type: Number,
-    default: 10,
+    default: 20,
   },
 });
 
-const User = models?.Image || model('Image', UserSchema);
+const User = models?.User || model("User", UserSchema);
 
 export default User;
