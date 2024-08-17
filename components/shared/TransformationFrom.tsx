@@ -71,15 +71,15 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-
-    if(data || image) {
+  
+    if (data || image) {
       const transformationUrl = getCldImageUrl({
         width: image?.width,
         height: image?.height,
         src: image?.publicId,
         ...transformationConfig
-      })
-
+      });
+  
       const imageData = {
         title: values.title,
         publicId: image?.publicId,
@@ -92,20 +92,24 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
         aspectRatio: values.aspectRatio,
         prompt: values.prompt,
         color: values.color,
-      }
-
-      if(action === 'Add') {
+      };
+  
+      if (action === 'Add') {
         try {
           const newImage = await addImage({
             image: imageData,
             userId,
             path: '/'
-          })
-
-          if(newImage) {
-            form.reset()
-            setImage(data)
-            router.push(`/transformations/${newImage._id}`)
+          });
+  
+          if (newImage) {
+            // Deduct credits only after the image has been successfully added
+            const newCreditBalance = creditBalance - Math.abs(creditFee);
+            // updateCreditBalance(newCreditBalance);
+  
+            form.reset();
+            setImage(data);
+            router.push(`/transformations/${newImage._id}`);
           }
         } catch (error) {
           console.log(error);
@@ -291,6 +295,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
             isTransforming={isTransforming}
             setIsTransforming={setIsTransforming}
             transformationConfig={transformationConfig}
+            hasDownload={true}
           />
         </div>
 

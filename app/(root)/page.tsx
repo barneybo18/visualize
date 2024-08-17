@@ -14,7 +14,7 @@ const Home = async ({searchParams}: SearchParamProps) => {
     <>
       <section className='home'>
         <h1 className='home-heading'>
-          Bring Out The Creativity In You With Visualize
+         Craft Your Masterpiece With Visualize!
         </h1>
         <ul className='flex-center w-full gap-20'>
           {navLinks.slice(1,6).map((link) =>(
